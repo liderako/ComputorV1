@@ -34,8 +34,22 @@
 # anton = Man("man", "anton", 10)
 import sys
 
-def main(argv):
-    x = "anton"
-    print len(argv)
+class Polynomial:
+	__input_s = "NULL"
 
-main(sys.argv)
+	def 	__init__(self, argv):
+		self.__input_s = argv
+
+	def 	valid(self):
+		# self.__input_s = self.__input_s.split(" ")
+		# print self.__input_s
+		s_split = self.__input_s.split(" ")
+		print s_split
+
+def main(argc, argv):
+	if (argc != 2):
+		print "Error: size argc != 2"
+		return (-1) # need found exit
+	p = Polynomial(argv[1])
+	p.valid()
+main(len(sys.argv), sys.argv)
