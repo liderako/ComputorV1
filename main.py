@@ -36,21 +36,20 @@
 import sys
 
 class Polynomial:
+	a = 0.0
+	b = 0.0
+	c = 0.0
 	def 	__init__(self, argv):
 		self.__input_s = argv
 
-	def 	__valid(string):
-		string = "NULL"
-		return -1
-
+	def 	valid(self, string):
+		return "NULL"
 	def 	convert(self):
-		# self.__input_s = self.__input_s.split(" ")
-		# print self.__input_s
 		s_split = self.__input_s.split(" ")
-		print s_split
-		res = __valid(s_split)
-		# return (res)
-
+		print "test ",s_split
+		res = self.valid(s_split)
+		return (res)
+		# print ()
 def main(argc, argv):
 	if (argc != 2):
 		print "Error: size argc != 2"
