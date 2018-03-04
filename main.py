@@ -31,25 +31,30 @@
 #     def getPoll(self):
 #         return self.__pol
 #
-# anton = Man("man", "anton", 10)
+
+
 import sys
 
 class Polynomial:
-	__input_s = "NULL"
-
 	def 	__init__(self, argv):
 		self.__input_s = argv
 
-	def 	valid(self):
+	def 	__valid(string):
+		string = "NULL"
+		return -1
+
+	def 	convert(self):
 		# self.__input_s = self.__input_s.split(" ")
 		# print self.__input_s
 		s_split = self.__input_s.split(" ")
 		print s_split
+		res = __valid(s_split)
+		# return (res)
 
 def main(argc, argv):
 	if (argc != 2):
 		print "Error: size argc != 2"
 		return (-1) # need found exit
 	p = Polynomial(argv[1])
-	p.valid()
+	p.convert()
 main(len(sys.argv), sys.argv)
