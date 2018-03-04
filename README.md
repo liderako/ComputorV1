@@ -20,3 +20,8 @@ Equations polynomiales
 Algorithms & AI 
 Rigor
 ```
+
+### General Instructions
+
+That said, you are not allowed any mathematic function/library (beside additions
+and multiplications of real numbers) that you did not implement yourself.
