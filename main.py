@@ -35,25 +35,31 @@
 
 import sys
 
+def putstr(string):
+    sys.stdout.write(string)
+
 class Polynomial:
 	a = 0.0
 	b = 0.0
 	c = 0.0
 	def 	__init__(self, argv):
-		self.__input_s = argv
+		self.__input_param = argv.split(" ")
 
-	def 	valid(self, string):
-		return "NULL"
+	def 	valid(self):
+		return -1
+
 	def 	convert(self):
-		s_split = self.__input_s.split(" ")
-		print "test ",s_split
-		res = self.valid(s_split)
+		# s_split = self.__input_s.split(" ")
+		res = self.__input_param.valid()
 		return (res)
-		# print ()
-def main(argc, argv):
-	if (argc != 2):
-		print "Error: size argc != 2"
-		return (-1) # need found exit
-	p = Polynomial(argv[1])
-	p.convert()
-main(len(sys.argv), sys.argv)
+
+def main():
+	putstr("Input: ")
+	answer = raw_input()
+	argv = answer.upper()
+	p = Polynomial(argv)
+	res = p.convert()
+	if (res == -1):
+		print ("Error: syntax error")
+		return (1)
+main()
