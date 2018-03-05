@@ -43,19 +43,27 @@ class Polynomial:
 	b = 0.0
 	c = 0.0
 	def 	__init__(self, argv):
-		self.__input_param = argv.split(" ")
+		self.inputParam = argv.split(" ")
 
 	def 	valid(self):
+		print self.inputParam
 		return -1
 
 	def 	convert(self):
-		# s_split = self.__input_s.split(" ")
-		res = self.__input_param.valid()
+		res = self.valid()
 		return (res)
 
-def main():
+def 	main_input():
 	putstr("Input: ")
-	answer = raw_input()
+	try:
+		answer = raw_input()
+		return answer
+	except:
+		print "\nError input"
+		sys.exit(0)
+
+def main():
+	answer = main_input()
 	argv = answer.upper()
 	p = Polynomial(argv)
 	res = p.convert()
