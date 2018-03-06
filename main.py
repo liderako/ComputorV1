@@ -1,7 +1,7 @@
 import sys
 
-# def putstr(string):
-#     sys.stdout.write(string)
+def putstr(string):
+    sys.stdout.write(string)
 
 # def   main_input():
 #   putstr("Input: ")
@@ -86,7 +86,7 @@ class Polynomial:
 
     def     valid(self):
         print self.inputParam ### need delete
-        print "Len ", len(self.inputParam) ### need delete
+        # print "Len ", len(self.inputParam) ### need delete
 
         self.CheckInputParam()
 
@@ -107,28 +107,96 @@ class Polynomial:
         elif (self.countDigital != self.countOperatorX):
             print "Error: math error, count digital != count operator * and Count X^[0-2]"
             sys.exit(1)
+    
+    def     join(self):
+        string = ""
+        for c in self.inputParam:
+                string = string + " " + c
+        return string.split("=")
+    
+    def     parsString(self, string):
+        res = string.strip()
+        res = res.split(" ")
+        return res
+
+    def     doop(self, digital, lvl, operator):
+        if (lvl == '0'):
+            if operator == '+':
+                self.c += digital
+            elif operator == '-':
+                self.c -= digital
+            elif operator == '*':
+                if (self.c == 0):
+                    self.c += 1
+                self.c *= digital
+        elif (lvl == '1'):
+            if operator == '+':
+                self.b += digital
+            elif operator == '-':
+                self.b -= digital
+            elif operator == '*':
+                if (self.b == 0):
+                    self.b += 1
+                self.b *= digital
+        else:
+            if operator == '+':
+                self.a += digital
+            elif operator == '-':
+                self.a -= digital
+            elif operator == '*':
+                if (self.a == 0):
+                    self.a += 1
+                self.a *= digital
+
+    def     reducePartOne(self, partOne):
+        size = len(partOne)
+        digital = 0
+        operator = '0'
+        old = '0'
+        i = 0
+        for c in partOne:
+            c_len = len(c)
+            if ((isfloat(c)) == True):
+                digital = float(c)
+                tmp = partOne[i + 2]
+                lvl = tmp[2]
+                old = 'digital'
+                if ((operator == '0')):
+                    self.doop(digital, lvl, '+')
+                else:
+                    self.doop(digital, lvl, operator)
+            elif (c_len == 3 and (('X^1' in c) or ('X^0' in c) or ('X^2' in c))):
+                old = 'X'
+            elif c_len == 1:
+                if old == 'X':
+                    operator = c[0]
+            i += 1
+    
+    def     findLvl(self):
+        if self.a != 0:
+            self.lvlDegree = 2
+        elif self.b != 0:
+            self.lvlDegree = 1
+        elif self.c != 0:
+            self.lvlDegree = 0
+    
     def     convert(self):
         res = self.valid()
-        tmpD = 0.0
-        tmpO = '0'
-        tmpX = -1
-        flagTwoPart = 0
-        i = 0
-        j = 0
-        for c in self.inputParam:
-            if ((isfloat(c)) == True):
-                tmpD = isfloat(c)
-                tmpString = self.inputParam[j + 2]
-                tmpX = int(tmpString[2])
-                if (tmpX == '0')
-                    # self.a = tmpD
-                elif (tmpX == '1')
-
-                elif (tmpX == '2')
-
-                # tmpX = self.inputParam[j + 2]
-            j += 1
+        string = self.join()
+        partOne = self.parsString(string[0])
+        partTwo = self.parsString(string[1])
+        # print "PartOne ", partOne
+        self.reducePartOne(partOne)
+        self.reducePartTwo(partTwo)
+        
+        print "a ", self.a # need delete
+        print "b, ", self.b # need delete
+        print "c ", self.c # need delete
+        
+        self.findLvl()
+        print "Polynomial degree: ", self.lvlDegree
         return (res)
+
 def main(argc, argv):
     # answer = main_input()
     if (argc != 2):
@@ -138,6 +206,6 @@ def main(argc, argv):
     argv = answer.upper()
     p = Polynomial(argv)
     res = p.convert()
-    print "OK"
-    return (1)
+    # print "OK"
+    # return (1)
 main(len(sys.argv), sys.argv)
