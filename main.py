@@ -29,6 +29,7 @@ class Polynomial:
     def     valid(self):
         self.CheckInputParam()
         self.checkRes()
+
     def     CheckInputParam(self):
         old = '0' 
         for c in self.inputParam:
@@ -68,15 +69,12 @@ class Polynomial:
             Error("Error: syntax error in end")
 
     def     checkRes(self):
-        if (self.countDigital != self.countX):
-            print "Error: math error, Count digital != count X^[0-2]"
-            sys.exit(1)
+        if (self.countDigital != self.countX):\
+            Error("Error: math error, Count digital != count X^[0-2]")
         elif self.countOperatorRavno != 1:
-            print "Error: math error, syntax error with \'=\'"
-            sys.exit(1)
+            Error("Error: math error, syntax error with \'=\'")
         elif (self.countDigital != self.countOperatorX):
-            print "Error: math error, count digital != count operator * and Count X^[0-2]"
-            sys.exit(1)
+            Error("Error: math error, count digital != count operator * and Count X^[0-2]")
     
     def     join(self):
         string = ""
