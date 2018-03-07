@@ -9,78 +9,63 @@ class Polynomial:
     countOperator = 0
     countOperatorRavno = 0
     countOperatorX = 0
-    countOperatorAll = 0
     countX = 0
     lvlDegree = 0
 
     def     __init__(self, argv):
         self.inputParam = argv.split(" ")
-    
+
     def     convert(self):
-        res = self.valid()
+        self.valid()
         string = self.join()
         partOne = self.parsString(string[0])
         partTwo = self.parsString(string[1])
         self.reducePartOne(partOne)
-        # self.reducePartTwo(partTwo)
         
         print "a ", self.a # need delete
         print "b ", self.b # need delete
         print "c ", self.c # need delete
-        return (res)
 
     def     valid(self):
         self.CheckInputParam()
         self.checkRes()
-        return 1
-    
     def     CheckInputParam(self):
         old = '0' 
         for c in self.inputParam:
             size = len(c)
-            if ((isfloat(c)) == True): # CHECK input
+            if ((isfloat(c)) == True):
                 if (old != '0' and old != 'o' and old != '='):
-                    print "Error: syntax error with before digital", c
-                    sys.exit(1)
+                    Error("Error: syntax error with before digital ", + c)
                 self.countDigital += 1
                 old = 'd'
-            elif ((c.isalpha()) == 1): # CHECK ERROR
-                print "Error: syntax error in ", c
-                sys.exit(1)
+            elif ((c.isalpha()) == 1):
+                Error("Error: syntax error in ", c)
             elif (size == 3 and (('X^1' in c) or ('X^0' in c) or ('X^2' in c))):
-                self.countX += 1
                 if (old != '*'):
-                    print "Error: math error operator", c
-                    sys.exit(1)
+                    Error("Error: math error operator " + c)
                 old = 'x'
+                self.countX += 1
             elif (size == 1 and c[0] == '='):
-                self.countOperatorRavno += 1
                 if (old != 'x'):
-                    print "Error: math error \'=\'"
-                    sys.exit(1)
+                    Error("Error: math error \'=\' ")
                 old = '='
+                self.countOperatorRavno += 1
             elif (size == 1 and (c[0] == '*' or c[0] == '+' or c[0] == '-')):
                 if (old == 'x'):
                     old = 'o'
-                    self.countOperatorAll += 1
-                elif (old == 'd' and c[0] != '*'): # ERROR CHECK
-                    print "Error: math error with * in ", c
-                    sys.exit(1)
+                elif (old == 'd' and c[0] != '*'):
+                    Error("Error: math error with * in " + c)
                 elif (old == 'd' and c[0] == '*'):
                     self.countOperatorX += 1
                     old = '*'
                 else:
-                    print "Error: math error with operator"
-                    sys.exit(1)
+                    Error("Error: math error with operator")
             elif (size >= 3 and 'X^' in c):
-                print "Error: Level degree too big or invalid", c
-                sys.exit(1)
+                Error("Error: Level degree too big or invalid " + c)
             elif (size > 1):
-                print "Error: syntax error in ", c
-                sys.exit(1)
+                Error("Error: syntax error in " + c)
         if (old != 'x'):
-            print "Error: syntax error in end"
-            sys.exit(1)
+            Error("Error: syntax error in end")
 
     def     checkRes(self):
         if (self.countDigital != self.countX):
@@ -161,14 +146,11 @@ class Polynomial:
     #             self.a *= digital
 
 def main(argc, argv):
-    # answer = main_input()
     if (argc != 2):
         print "Error: size argc != 2"
-        sys.exit(1) # need found exit
+        sys.exit(1)
     answer = argv[1]
     argv = answer.upper()
     p = Polynomial(argv)
-    res = p.convert()
-    # print "OK"
-    # return (1)
+    p.convert()
 main(len(sys.argv), sys.argv)
