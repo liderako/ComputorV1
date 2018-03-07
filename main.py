@@ -51,8 +51,8 @@ class Polynomial:
                     Error("Error: math error \'=\' ")
                 old = '='
                 self.countOperatorRavno += 1
-            elif (size == 1 and (c[0] == '*' or c[0] == '+' or c[0] == '-')):
-                if (old == 'x'):
+            elif (size == 1 and ( c[0] == '*' or c[0] == '+' or c[0] == '-')):
+                if (old == 'x' and c[0] != '*'):
                     old = 'o'
                 elif (old == 'd' and c[0] != '*'):
                     Error("Error: math error with * in " + c)
