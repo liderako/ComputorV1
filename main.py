@@ -92,7 +92,7 @@ class Polynomial:
                 if (old != '0' and old != 'o' and old != '='):
                     Error("Error: syntax error with before digital ", + c)
                 tmp  = float(c)
-                if (tmp < 0):
+                if (old == 'o' and tmp < 0):
                     Error("Error: math error with operator -")
                 self.countDigital += 1
                 old = 'd'
@@ -149,8 +149,8 @@ class Polynomial:
         twoM = Matrix(self.countDigital)
         oneM.convertMatrix(partOne)
         twoM.convertMatrix(partTwo)
-        # oneM.printMatrix("ONE") # need delete
-        # twoM.printMatrix("TWO") # need delete
+        oneM.printMatrix("ONE") # need delete
+        twoM.printMatrix("TWO") # need delete
         self.c = oneM.mathMatrix(oneM.matrixC)
         self.b = oneM.mathMatrix(oneM.matrixB)
         self.a = oneM.mathMatrix(oneM.matrixA)
