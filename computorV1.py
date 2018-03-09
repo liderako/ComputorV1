@@ -59,6 +59,8 @@ class Polynomial:
     c = 0
     t0 = 0.0
     t1 = 0.0
+    t1s = ''
+    t0s = ''
     d = 0
     countDigital = 0
     countOperator = 0
@@ -66,6 +68,7 @@ class Polynomial:
     countOperatorX = 0
     countX = 0
     lvlDegree = 0
+    s = 0
 
     def     __init__(self, argv):
         self.inputParam = argv.split(" ")
@@ -231,8 +234,8 @@ class Polynomial:
                 print self.t0
             elif self.d < 0:
                 print "Its discriminant is strictly negative, so it has exactly two complex solutions:"
-                print str(self.t0) + "i"
-                print str(self.t1) + "i"
+                print str(self.t0s)
+                print str(self.t1s)
         elif self.lvlDegree == 1:
             print "Equation with one unknown, the one solutions are:"
             print self.t0
@@ -247,23 +250,27 @@ class Polynomial:
 
     def     doubleEquation(self):
         d = self.b * self.b - 4 * self.a * self.c
-        print "dicri", d
         res = 0
         i = -1
         if d < 0:
-            s = math.sqrt(d * -1)
-            self.t0 = (-self.b + i * s) / (2 * self.a)
-            self.t1 = (-self.b - i * s) / (2 * self.a)
+            s = int(-d) ** 0.5
+            tmpA = (2 * self.a)
+            tmpB = (-self.b / tmpA)
+            tmpS = i * (s / tmpA)
+            self.t0s = str(tmpB) + ' + i * ' + str(tmpS)
+            self.t1s = str(tmpB) + ' - i * ' + str(tmpS) 
         if d == 0:
-             self.t0 = (-self.b + math.sqrt(d)) / (2 * self.a);
+            sd = d ** 0.5
+            self.t0 = (-self.b + sd) / (2 * self.a);
         elif d > 0:
-            self.t0 = (-self.b + math.sqrt(d)) / (2 * self.a);
-            self.t1 = (-self.b - math.sqrt(d)) / (2 * self.a);
+            sd = d ** 0.5
+            self.t0 = (-self.b + sd) / (2 * self.a);
+            self.t1 = (-self.b - sd) / (2 * self.a);
         self.d = d
 
     def     linealEquation(self):
         self.c *= -1
-        self.t0 = self.b / self.c
+        self.t0 = self.c / self.b
 
 def main(argc, argv):
     if (argc != 2):
