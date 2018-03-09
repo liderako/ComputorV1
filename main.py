@@ -1,4 +1,5 @@
 import sys
+import math
 import numpy as np
 from module import *
 
@@ -56,6 +57,9 @@ class Polynomial:
     a = 0
     b = 0
     c = 0
+    t0 = 0.0
+    t1 = 0.0
+    d = 0
     countDigital = 0
     countOperator = 0
     countOperatorRavno = 0
@@ -149,8 +153,6 @@ class Polynomial:
         twoM = Matrix(self.countDigital)
         oneM.convertMatrix(partOne)
         twoM.convertMatrix(partTwo)
-        # oneM.printMatrix("ONE") # need delete
-        # twoM.printMatrix("TWO") # need delete
         self.c = oneM.mathMatrix(oneM.matrixC)
         self.b = oneM.mathMatrix(oneM.matrixB)
         self.a = oneM.mathMatrix(oneM.matrixA)
@@ -169,6 +171,7 @@ class Polynomial:
     def     printResult(self):
         self.printReduce()
         print "Polynomial degree:", self.lvlDegree
+        self.printSolution()
 
     def     printReduce(self):
         string = self.createStringReduce()
@@ -216,7 +219,43 @@ class Polynomial:
             string = string + str(self.a)
         string = string + " * X^2"
         return string
+    def     printSolution(self):
+        if self.lvlDegree == 2:
+            if self.d > 0:
+                print "Discriminant is strictly positive, the two solutions are:"
+                print self.t0, "i"
+                print self.t1, "i"
+            elif self.d == 0:
+                print "The discriminant is zero solution one:"
+                print self.t0
+            elif self.d < 0:
+                print "Its discriminant is strictly negative, so it has exactly two complex solutions:"
+                print str(self.t0) + "i"
+                print str(self.t1) + "i"
 
+
+    def     decideEquation(self):
+        if (self.a != 0):
+            self.doubleEquation()
+        else:
+            print "Lineal equation"
+
+    def     doubleEquation(self):
+        d = self.b * self.b - 4 * self.a * self.c
+        print "dicri", d
+        res = 0
+        i = -1
+        if d < 0:
+            s = math.sqrt(d * -1)
+            self.t0 = (-self.b + i * s) / (2 * self.a)
+            self.t1 = (-self.b - i * s) / (2 * self.a)
+        if d == 0:
+             self.t0 = (-self.b + math.sqrt(d)) / (2 * self.a);
+        elif d > 0:
+            self.t0 = (-self.b + math.sqrt(d)) / (2 * self.a);
+            self.t1 = (-self.b - math.sqrt(d)) / (2 * self.a);
+        self.d = d
+        # return res
 def main(argc, argv):
     if (argc != 2):
         print "Error: size argc != 2"
@@ -225,5 +264,6 @@ def main(argc, argv):
     argv = answer.upper()
     p = Polynomial(argv)
     p.convert()
+    p.decideEquation()
     p.printResult()
 main(len(sys.argv), sys.argv)
