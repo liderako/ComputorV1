@@ -74,11 +74,11 @@ class Polynomial:
         self.reduce(partOne, partTwo)
         self.findLvlDegree()
 
-        print "a ", self.a # need delete
-        print "b ", self.b # need delete
-        print "c ", self.c # need delete
-        print "Lvl degree", self.lvlDegree
-        sys.exit(1)
+        # print "a ", self.a # need delete
+        # print "b ", self.b # need delete
+        # print "c ", self.c # need delete
+        # print "Lvl degree", self.lvlDegree
+        # sys.exit(1)
     
     def     valid(self):
         self.CheckInputParam()
@@ -149,8 +149,8 @@ class Polynomial:
         twoM = Matrix(self.countDigital)
         oneM.convertMatrix(partOne)
         twoM.convertMatrix(partTwo)
-        oneM.printMatrix("ONE") # need delete
-        twoM.printMatrix("TWO") # need delete
+        # oneM.printMatrix("ONE") # need delete
+        # twoM.printMatrix("TWO") # need delete
         self.c = oneM.mathMatrix(oneM.matrixC)
         self.b = oneM.mathMatrix(oneM.matrixB)
         self.a = oneM.mathMatrix(oneM.matrixA)
@@ -166,6 +166,57 @@ class Polynomial:
         else:
             self.lvlDegree = 0
 
+    def     printResult(self):
+        self.printReduce()
+        print "Polynomial degree:", self.lvlDegree
+
+    def     printReduce(self):
+        string = self.createStringReduce()
+        print string
+
+    def     createStringReduce(self):
+        string = "Reduced form: "
+        if (self.c != 0):
+            string = string + str(self.c) + " * X^0"
+        if (self.b != 0):
+            string = string + self.checkStringB()
+        if (self.a != 0):
+            string = string + self.checkStringA()
+        string = string + " = 0"
+        return string
+
+    def     checkStringB(self):
+        string = ""
+        flag = 0
+        if (self.c != 0):
+            flag = 1
+        if flag == 1:
+            if self.b < 0:
+                tmpB = self.b * -1
+                string = string + " - " + str(tmpB)
+            else:
+                string = string + " + " + str(self.b)
+        else:
+            string = string + str(self.b)
+        string = string + " * X^1"
+        return string
+
+    def     checkStringA(self):
+        string = ""
+        flag = 0
+        if (self.b != 0 or self.c):
+            flag = 1
+        if flag == 1:
+            if self.a < 0:
+                tmpA = self.a * -1
+                string = string + " - " + str(tmpA)
+            else:
+                string = string + " + " + str(self.a)
+        else:
+            string = string + str(self.a)
+        string = string + " * X^2"
+        return string
+
 def main(argc, argv):
     if (argc != 2):
         print "Error: size argc != 2"
@@ -174,4 +225,5 @@ def main(argc, argv):
     argv = answer.upper()
     p = Polynomial(argv)
     p.convert()
+    p.printResult()
 main(len(sys.argv), sys.argv)
