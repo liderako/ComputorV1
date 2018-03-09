@@ -36,11 +36,6 @@ class   Matrix:
             elif size == 1 and c[0] == '-':
                 old = '-'
             x += 1
-    def     printMatrix(self, string): # need delete this function
-        print string
-        print "A",self.matrixA
-        print "B",self.matrixB
-        print "C",self.matrixC
 
     def     mathMatrix(self, matrix, operator='+'):
         x = 0.0
@@ -80,12 +75,6 @@ class Polynomial:
         partTwo = self.parsString(string[1])
         self.reduce(partOne, partTwo)
         self.findLvlDegree()
-
-        # print "a ", self.a # need delete
-        # print "b ", self.b # need delete
-        # print "c ", self.c # need delete
-        # print "Lvl degree", self.lvlDegree
-        # sys.exit(1)
     
     def     valid(self):
         self.CheckInputParam()
@@ -245,7 +234,7 @@ class Polynomial:
     def     decideEquation(self):
         if (self.a != 0):
             self.doubleEquation()
-        else:
+        elif self.lvlDegree == 1:
             self.linealEquation()
 
     def     doubleEquation(self):
