@@ -219,12 +219,13 @@ class Polynomial:
             string = string + str(self.a)
         string = string + " * X^2"
         return string
+
     def     printSolution(self):
         if self.lvlDegree == 2:
             if self.d > 0:
                 print "Discriminant is strictly positive, the two solutions are:"
-                print self.t0, "i"
-                print self.t1, "i"
+                print self.t0
+                print self.t1
             elif self.d == 0:
                 print "The discriminant is zero solution one:"
                 print self.t0
@@ -232,13 +233,17 @@ class Polynomial:
                 print "Its discriminant is strictly negative, so it has exactly two complex solutions:"
                 print str(self.t0) + "i"
                 print str(self.t1) + "i"
-
+        elif self.lvlDegree == 1:
+            print "Equation with one unknown, the one solutions are:"
+            print self.t0
+        elif self.lvlDegree == 0:
+            print "All the real numbers are solution..."
 
     def     decideEquation(self):
         if (self.a != 0):
             self.doubleEquation()
         else:
-            print "Lineal equation"
+            self.linealEquation()
 
     def     doubleEquation(self):
         d = self.b * self.b - 4 * self.a * self.c
@@ -255,7 +260,11 @@ class Polynomial:
             self.t0 = (-self.b + math.sqrt(d)) / (2 * self.a);
             self.t1 = (-self.b - math.sqrt(d)) / (2 * self.a);
         self.d = d
-        # return res
+
+    def     linealEquation(self):
+        self.c *= -1
+        self.t0 = self.b / self.c
+
 def main(argc, argv):
     if (argc != 2):
         print "Error: size argc != 2"
